@@ -6,12 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: b6dd41aa070778e0750d545fc386e908c6e926292690e4fae04ef7613e3ef36d
 
 build:
   noarch: python
-  number: 0
+  number: 1
   entry_points:
     - crepe=crepe.cli:main
   script: {{ PYTHON }} -m pip install . -vv
@@ -19,9 +19,9 @@ build:
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - h5py <3.0.0,>=2.7.0
     - hmmlearn <0.3.0,>=0.2.0
     - imageio >=2.3.0
@@ -32,6 +32,8 @@ requirements:
     - scipy >=1.0.0
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - crepe
   commands:
